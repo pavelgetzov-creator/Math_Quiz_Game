@@ -3,7 +3,7 @@ import random as rd
 
 app = tk.Tk()
 app.title("Math Quiz")
-app.geometry("400x400")
+app.geometry("600x600")
 app.config(bg="#0f172a")
 
 
@@ -13,6 +13,9 @@ app.grid_columnconfigure(0, weight=1)
 menu_frame = tk.Frame(app)
 menu_frame.grid(row=0, column=0)
 menu_frame.config(bg="#0f172a")
+
+mode_frame = tk.Frame(app)
+mode_frame.config(bg="#0f172a")
 
 game_frame = tk.Frame(app)
 game_frame.config(bg="#0f172a")
@@ -24,14 +27,35 @@ time_left = 10
 timer_job = None
 
 def generate_question():
-    global correct_answer 
+    global correct_answer, chosen_mode
+    max_num1 = 20
+    max_num2 = 20
 
-    num1 = rd.randint(1,20)
-    num2 = rd.randint(1,20)
+    if chosen_mode == "*" or chosen_mode == "/":
+        max_num1 = 10
+        max_num2 = 10
 
-    correct_answer = num1 + num2
 
-    question_label.config(text=f"How much is {num1} + {num2}?")
+    num1 = rd.randint(1, max_num1)
+    num2 = rd.randint(1, max_num2)
+
+    if chosen_mode == "+":
+        correct_answer = num1 + num2
+    elif chosen_mode == "-":
+        correct_answer = num1 - num2
+    elif chosen_mode == "*":
+        correct_answer = num1 * num2
+    elif chosen_mode == "/":
+        correct_answer = num1 // num2
+
+    if chosen_mode == "-" and num1 < num2:
+        num1, num2 = num2, num1
+
+    if chosen_mode == "/":
+        num1 = num1 * num2
+
+
+    question_label.config(text=f"How much is {num1} {chosen_mode} {num2}?")
 
 def check_answer(event = None):
     global score
@@ -142,16 +166,23 @@ def set_time(val):
 def start_game(event=None):
     global selected_time, time_left
     menu_frame.grid_forget()
+    mode_frame.grid(row=0, column=0)
+    chosen_mode = "+"
+
+def start_quiz_mode(mode):
+    global chosen_mode, time_left, selected_time
+
+    chosen_mode = mode
+    mode_frame.grid_forget()
     game_frame.grid(row=0, column=0)
 
     time_left = selected_time
-
-    timer_label.config(text=f"Time: {selected_time}")
-
+    timer_label.config(text=f"Time: {time_left}")
 
     generate_question()
     countdown()
     answer_entry.focus_set()
+
 
 def back_to_menu():
     global score, time_left, timer_job, selected_time
@@ -172,7 +203,25 @@ def back_to_menu():
     name_entry.focus_set()
     game_frame.grid_forget()
     menu_frame.grid(row=0, column=0)
+def back_to_mode():
+    global score, time_left, timer_job, selected_time
 
+    if timer_job is not None:
+        app.after_cancel(timer_job)
+        timer_job = None
+
+    score = 0
+    time_left = selected_time
+    answer_entry.config(state="normal")
+    submit_button.config(state="normal")
+    answer_entry.delete(0, tk.END)
+    score_label.config(text="Scores: 0")
+    timer_label.config(text=f"Time: {selected_time}")
+    question_label.config(fg="#ffffff")
+
+    name_entry.focus_set()
+    game_frame.grid_forget()
+    mode_frame.grid(row=0, column=0)
 #Бутони,лейбъли и полета от менюто
 title_label = tk.Label(menu_frame, text="Welcome to Math Quiz!!",font=("Segoe UI", 20, "bold"), fg="#38bdf8", bg="#0f172a")
 title_label.grid(row=0, column=0, pady=20)
@@ -192,6 +241,24 @@ time_slider.set(10)
 play_button = tk.Button(menu_frame, text="Play Game 🚀",font=("Segoe UI", 11, "bold"), bg="#10b981", fg="#ffffff", bd=0, relief="flat", command= start_game)
 play_button.grid(row=5, column=0, padx= 20,pady= 8)
 
+# Бутони,лейбъли и полета от режимите на играта
+mode_label = tk.Label(mode_frame, text="Choose a mode:",font=("Segoe UI", 18, "bold"), fg="#38bdf8", bg="#0f172a")
+mode_label.grid(row=0, column=0, pady=20)
+
+addition_button = tk.Button(mode_frame, text="Addition ➕",font=("Segoe UI", 11, "bold"), bg="#10b981", fg="#ffffff", bd=0, relief="flat", padx=15, pady=5, command=lambda: start_quiz_mode("+"))
+addition_button.grid(row=1, column=0, padx=10, pady=10)
+
+subbtraction_button = tk.Button(mode_frame, text="Subtraction ➖",font=("Segoe UI", 11, "bold"), bg="#f43f5e", fg="#ffffff", bd=0, relief="flat", padx=15, pady=5, command=lambda: start_quiz_mode("-"))
+subbtraction_button.grid(row=2, column=0, padx=10, pady=10)
+
+multiplication_button = tk.Button(mode_frame, text="Multiplication ✖️",font=("Segoe UI", 11, "bold"), bg="#3b82f6", fg="#ffffff", bd=0, relief="flat", padx=15, pady=5, command=lambda: start_quiz_mode("*"))
+multiplication_button.grid(row=3, column=0, padx=10, pady=10)
+
+division_button = tk.Button(mode_frame, text="Division ➗",font=("Segoe UI", 11, "bold"), bg="#facc15", fg="#ffffff", bd=0, relief="flat", padx=15, pady=5, command=lambda: start_quiz_mode("/"))
+division_button.grid(row=4, column=0, padx=10, pady=10)
+
+mode_frame.grid_columnconfigure(0, weight=1)
+mode_frame.grid_columnconfigure(1, weight=1)
 
 # Бутони,лейбъли и полета от самата игра
 answer_entry = tk.Entry(game_frame, font=("Segoe UI", 14), bg="#1e293b", fg="#ffffff", bd=0, relief="flat", justify="center")
@@ -220,8 +287,10 @@ game_frame.grid_columnconfigure(0, weight=1)
 game_frame.grid_columnconfigure(1, weight=1)
 
 back_to_menu_button = tk.Button(game_frame, text="Back to Menu",font=("Segoe UI", 10, "bold"), bg="#f43f5e", fg="#ffffff", bd=0, relief="flat", padx=15, pady=5, command=back_to_menu)
-back_to_menu_button.grid(row=6, column=0, columnspan=2, pady=10)
+back_to_menu_button.grid(row=7, column=0, columnspan=2, pady=10)
 
+back_to_mode_button = tk.Button(game_frame, text="Back to Modes 🎯",font=("Segoe UI", 10, "bold"), bg="#f43f5e", fg="#ffffff", bd=0, relief="flat", padx=15, pady=5, command=back_to_mode)
+back_to_mode_button.grid(row=6, column=0, columnspan=2, pady=10)
 
 
 
