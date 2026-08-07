@@ -22,7 +22,7 @@ Follow these simple steps in your terminal to download and start playing the gam
 ### 1. Clone the Repository
 Clone this project directly from GitHub to your machine:
 ```bash
-git clone https://github.com
+git clone https://github.com/pavelgetzov-creator/Math_Quiz_Game
 ```
 
 ### 2. Navigate into the Project Folder
