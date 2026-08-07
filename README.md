@@ -4,11 +4,20 @@ A sleek, interactive, and fast-paced desktop math quiz application built with **
 
 ## 🌟 Features
 
-- **Dynamic Main Menu:** Enter your name and prepare for the challenge in a beautiful modern dark-themed interface.
+ **Dynamic Main Menu:** Enter your name and prepare for the challenge in a beautiful modern dark-themed interface.
 - **Custom Time Settings:** Features an interactive sliding bar (`tk.Scale`) allowing you to set the match timer anywhere from 10 to 120 seconds.
-- **Automated Math Logic:** Generates random addition questions dynamically while ensuring proper answer validation.
+- **Multiple Game Modes Selection:** A dedicated selection screen featuring **4 mathematical operations**:
+  - Addition (`+`)
+  - Subtraction (`-`)
+  - Multiplication (`*`)
+  - Division (`//`)
+- **Smart Balancing Logic:** Dynamic number constraints tailored per game mode to optimize gameplay fluidness:
+  - Numbers range up to `20` for standard addition and subtraction.
+  - Numbers downscale up to `10` for multiplication and division to keep calculations smooth.
+  - Automatic number inversion during subtraction to prevent negative outputs.
+  - Mathematical inverse multiplication algorithms for division to ensure zero-remainder whole answers.
 - **Local Leaderboard:** Saves player performance data securely in a local `scores.txt` file and displays the Top 3 highest scores automatically at game over.
-- **Seamless Navigation:** Easily jump back and forth between the active game and the main menu using the integrated "Back to Menu" and "Play Again" flows.
+- **Advanced Navigation Flow:** Seamless switching between windows including standalone "Play Again", "Change Mode" (return to category grid), and "Back to Menu" (return to name entry screen) workflows.
 - **Safe State Management:** Built-in safeguards to prevent clock-doubling speed bugs and multi-profile sync glitches.
 
 ## 🛠️ Requirements
