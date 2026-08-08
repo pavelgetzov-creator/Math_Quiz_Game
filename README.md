@@ -4,25 +4,31 @@ A sleek, interactive, and fast-paced desktop math quiz application built with **
 
 ## 🌟 Features
 
- **Dynamic Main Menu:** Enter your name and prepare for the challenge in a beautiful modern dark-themed interface.
-- **Custom Time Settings:** Features an interactive sliding bar (`tk.Scale`) allowing you to set the match timer anywhere from 10 to 120 seconds.
-- **Multiple Game Modes Selection:** A dedicated selection screen featuring **4 mathematical operations**:
-  - Addition (`+`)
-  - Subtraction (`-`)
-  - Multiplication (`*`)
-  - Division (`//`)
-- **Smart Balancing Logic:** Dynamic number constraints tailored per game mode to optimize gameplay fluidness:
-  - Numbers range up to `20` for standard addition and subtraction.
-  - Numbers downscale up to `10` for multiplication and division to keep calculations smooth.
-  - Automatic number inversion during subtraction to prevent negative outputs.
-  - Mathematical inverse multiplication algorithms for division to ensure zero-remainder whole answers.
-- **Local Leaderboard:** Saves player performance data securely in a local `scores.txt` file and displays the Top 3 highest scores automatically at game over.
-- **Advanced Navigation Flow:** Seamless switching between windows including standalone "Play Again", "Change Mode" (return to category grid), and "Back to Menu" (return to name entry screen) workflows.
-- **Safe State Management:** Built-in safeguards to prevent clock-doubling speed bugs and multi-profile sync glitches.
+ Dynamic Main Menu: Enter your name and prepare for the challenge in a beautiful modern dark-themed interface.
+
+Custom Time Settings: A toggle button lets you switch the match timer between 30 and 60 seconds before starting a game.
+Multiple Game Modes Selection: A dedicated selection screen featuring 4 mathematical operations:
+Addition (+)
+Subtraction (-)
+Multiplication (*)
+Division (//)
+Smart Balancing Logic: Dynamic number constraints tailored per game mode to optimize gameplay fluidness:
+Numbers range up to 20 for standard addition and subtraction.
+Numbers downscale up to 10 for multiplication and division to keep calculations smooth.
+Automatic number inversion during subtraction to prevent negative outputs.
+Mathematical inverse multiplication algorithm for division to ensure zero-remainder whole answers.
+Local Leaderboard: Saves player performance data in a local scores.txt file. Scores are recorded automatically at game over; view the Top 3 per mode (Addition, Subtraction, Multiplication, Division) any time by opening the Leaderboard screen.
+Independent Leaderboard View: A dedicated toggle button on the leaderboard screen lets you switch between the 30-second and 60-second leaderboards at any time, regardless of which timer you're currently playing with.
+Advanced Navigation Flow: Seamless switching between windows including standalone "Play Again", "Change Mode" (return to category grid), and "Back to Menu" (return to name entry screen) workflows.
 
 ## 🛠️ Requirements
 
 To run this application from the source code, you only need **Python 3.x** installed on your system. Tkinter comes pre-installed with standard Python distributions.
+
+bash
+pip install pygame
+
+You'll also need correct.mp3 and incorrect.mp3 sound files in the same folder as math_quiz.py — the game loads them to play a sound on every correct or incorrect answer.
 
 ## 🚀 How to Clone and Run
 
